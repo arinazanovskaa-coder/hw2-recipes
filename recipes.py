@@ -111,3 +111,19 @@ class ShoppingList:
         combined = ShoppingList()
         combined._items = self._items.copy() + other._items.copy()
         return combined
+    
+class DietaryRecipe(Recipe):
+
+    def __init__(self, title, diet_type, ingredients=None):
+        super().__init__(title, ingredients)
+        self.diet_type = diet_type
+
+    def scale(self, ratio):
+        base = super().scale(ratio)
+        return DietaryRecipe(base.title, self.diet_type, base.ingredients)
+
+    def __str__(self):
+        parent = super().__str__()
+        lines = parent.split("\n")
+        lines[0] = f"[{self.diet_type}] {lines[0]}"
+        return "\n".join(lines)
